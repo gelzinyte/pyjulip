@@ -1,4 +1,3 @@
- #!/usr/bin/env python
 import numpy as np
 from ase.calculators.calculator import Calculator
 from ase.constraints import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
