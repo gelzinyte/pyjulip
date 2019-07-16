@@ -20,26 +20,43 @@ convert = Main.eval("julip_at(a) = JuLIP.Atoms(a)")
 from julia import Julia
 
 julia = Julia()
+julia.using("JuLIP")
 
 def pot(potname, fast=False):
-    if potname.endswith(".json"):
-        try:
-            julia.using("NBodyIPs")
-            julia.eval("IP, info = load_ip(\""+ potname + "\")")
-            if fast:
-                julia.eval("IP = fast(IP)")
-            ASE_IP = JulipCalculator("IP")
-            return ASE_IP
-        except:
-            print("couldn't find .json file")
-    else:
-        try:
-            julia.using("JuLIP")
-            julia.eval("IP = " + potname)
-            ASE_IP = JulipCalculator("IP")
-            return ASE_IP
-        except:
-            print("couldn't find potential")
+    try:
+        julia.eval("IP = " + potname)
+        ASE_IP = JulipCalculator("IP")
+        return ASE_IP
+    except:
+        print("couldn't find potential")
+
+def NBodyIPs(potname, fast=False):
+    try:
+        julia.using("NBodyIPs")
+        julia.eval("IP, info = load_ip(\""+ potname + "\")")
+        if fast:
+            julia.eval("IP = fast(IP)")
+        ASE_IP = JulipCalculator("IP")
+        return ASE_IP
+    except:
+        print("couldn't find .json file")
+
+def FinnisSinclair(potname1, potname2):
+    try:
+        julia.eval("IP = JuLIP.Potentials.FinnisSinclair(\"" + potname1 + "\", \"" + potname2 + "\")")
+        ASE_IP = JulipCalculator("IP")
+        return ASE_IP
+    except:
+        print("couldn't find potential")
+
+def EAM(potname):
+    try:
+        julia.eval("IP = JuLIP.Potentials.EAM(\"" + potname + "\")")
+        ASE_IP = JulipCalculator("IP")
+        return ASE_IP
+    except:
+        print("couldn't find potential")
+
 
 class JulipCalculator(Calculator):
     """
