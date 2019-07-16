@@ -5,7 +5,7 @@ PyJuLIP interface
 Runs from inside the libatoms Docker after following the next few steps:
 
 Julia: 
-- `] add https://github.com/cortner/NBodyIPs.jl.git` (for NBodyIPs support - required for the ./example/test.py), 
+- `] add https://github.com/cortner/NBodyIPs.jl.git` (for NBodyIPs support - required for the test.py), 
 - `] update` (JuLIP seems to be ancient (?) and requires updating)
 
 Python:
