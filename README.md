@@ -6,7 +6,6 @@ Runs from inside the libatoms Docker after following the next few steps:
 
 Julia: `] add https://github.com/cortner/NBodyIPs.jl.git` (for NBodyIPs support), `] update` (JuLIP seems to be ancient (?) and requires updating)
 
-- `ipython -m pip install --user julia`
 - `ipython setup.py install`
 - `cd example`
 - `ipython test.py`
