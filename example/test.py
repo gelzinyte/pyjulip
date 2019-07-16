@@ -18,7 +18,7 @@ print "NBODYIPS"
 ti_at = BodyCenteredCubic("Ti", latticeconstant=3.32)
 ti_big_at = ti_at * (2,2,2)
 
-test(si_big_at, pot)
+test(ti_big_at, pot)
 
 ######
 
