@@ -32,7 +32,7 @@ def pot(potname, fast=False):
             ASE_IP = JulipCalculator("IP")
             return ASE_IP
         except:
-            print "couldn't find .json file"
+            print("couldn't find .json file")
     else:
         try:
             julia.using("JuLIP")
@@ -40,7 +40,7 @@ def pot(potname, fast=False):
             ASE_IP = JulipCalculator("IP")
             return ASE_IP
         except:
-            print "couldn't find potential"
+            print("couldn't find potential")
 
 class JulipCalculator(Calculator):
     """
