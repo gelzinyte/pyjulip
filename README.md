@@ -19,7 +19,7 @@ Python:
 
 
 
-I tried Python3 but we need pip3 in Docker first
+I tried Python3; we need pip3 in Docker first
 
 Let's get pip3
 - `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`
