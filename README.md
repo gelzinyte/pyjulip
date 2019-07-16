@@ -19,7 +19,7 @@ Python:
 
 
 
-I tried Python3; we need pip3 in Docker first
+Python3: We need pip3 in Docker first
 
 Let's get pip3
 - `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`
@@ -31,7 +31,7 @@ Install pyjulia3
 Initialise with Julia
 - `python3 -c "import julia; julia.install()"`
 
-We get the following error.... so not python3 support yet
+We get the following error.... so no Python3 support yet
 `Your Python interpreter "/usr/bin/python3"
 is statically linked to libpython.  Currently, PyJulia does not fully
 support such Python interpreter.`
