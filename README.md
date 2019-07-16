@@ -1,4 +1,4 @@
-# pyjulip
+# PyJulip
 
 PyJuLIP interface
 
