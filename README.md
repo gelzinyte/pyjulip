@@ -2,8 +2,6 @@
 
 ======================================================================================
 
-PyJuLIP interface
-
 Runs from inside the libatoms Docker after following the next few steps:
 
 Julia: 
