@@ -24,6 +24,13 @@ def pot(potname, fast=False):
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
+def SHIP(potname):
+    julia.using("SHIPs")
+    julia.eval("D = load_json(\"" + potname + "\")")
+    julia.eval("IP = decode_dict(D[\"IP\"])")
+    ASE_IP = JulipCalculator("IP")
+    return ASE_IP
+
 def NBodyIPs(potname, fast=False):
     julia.using("NBodyIPs")
     julia.eval("IP, info = load_ip(\""+ potname + "\")")
