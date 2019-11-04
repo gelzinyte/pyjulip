@@ -4,20 +4,23 @@ from ase.constraints import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stre
 from ase.optimize.optimize import Optimizer
 
 from julia import Main
-from julia import ASE
-from julia import JuLIP
-
-from julia.JuLIP import energy, forces, stress, mat, positions, cell
-from julia.JuLIP import set_calculator_b, minimise_b, fixedcell_b, variablecell_b
-
-ASEAtoms = Main.eval("ASEAtoms(a) = ASE.ASEAtoms(a)")
-ASECalculator = Main.eval("ASECalculator(c) = ASE.ASECalculator(c)")
-convert = Main.eval("julip_at(a) = JuLIP.Atoms(a)")
 
 from julia import Julia
 
 julia = Julia()
+# julia.using("Pkg")
+# julia.eval("Pkg.activate(\"/Users/Cas/gits/NBodyIPsPapers/json_data/final_fits\")")
 julia.using("JuLIP")
+
+from julia import ASE
+from julia import JuLIP
+
+from julia.JuLIP import energy, forces, stress, mat, positions, cell
+#from julia.JuLIP import set_calculator_b, minimise_b, fixedcell_b, variablecell_b
+
+ASEAtoms = Main.eval("ASEAtoms(a) = ASE.ASEAtoms(a)")
+ASECalculator = Main.eval("ASECalculator(c) = ASE.ASECalculator(c)")
+convert = Main.eval("julip_at(a) = JuLIP.Atoms(a)")
 
 def pot(potname, fast=False):
     julia.eval("IP = " + potname)
@@ -26,6 +29,7 @@ def pot(potname, fast=False):
 
 def SHIP(potname):
     julia.using("SHIPs")
+    julia.using("PolyPairPots")
     julia.eval("D = load_json(\"" + potname + "\")")
     julia.eval("IP = decode_dict(D[\"IP\"])")
     ASE_IP = JulipCalculator("IP")
