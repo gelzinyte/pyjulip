@@ -29,6 +29,8 @@ def pot(potname, fast=False):
 
 def PoSH(potname):
     julia.using("PoSH")
+    #julia.using("SHIPs")
+    #julia.using("PolyPairPots")
     julia.eval("D = load_json(\"" + potname + "\")")
     julia.eval("IP = decode_dict(D[\"IP\"])")
     ASE_IP = JulipCalculator("IP")
