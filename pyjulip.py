@@ -8,9 +8,10 @@ from julia import Main
 from julia import Julia
 
 julia = Julia()
-# julia.using("Pkg")
-# julia.eval("Pkg.activate(\"/Users/Cas/gits/NBodyIPsPapers/json_data/final_fits\")")
-julia.using("JuLIP")
+julia.using("Pkg")
+print(julia.eval("2+2"))
+julia.eval("Pkg.activate(\"/Users/Cas/Work/NBodyIPs\")")
+#julia.using("JuLIP")
 
 from julia import ASE
 from julia import JuLIP
