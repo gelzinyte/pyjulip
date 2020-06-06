@@ -28,10 +28,8 @@ def pot(potname, fast=False):
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
-def SHIPs(potname):
+def SHIP(potname):
     julia.using("SHIPs")
-    #julia.using("SHIPs")
-    #julia.using("PolyPairPots")
     julia.eval("D = load_dict(\"" + potname + "\")")
     julia.eval("IP = read_dict(D[\"IP\"])")
     ASE_IP = JulipCalculator("IP")
