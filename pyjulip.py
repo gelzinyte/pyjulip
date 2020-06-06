@@ -8,9 +8,9 @@ from julia import Main
 from julia import Julia
 
 julia = Julia()
-julia.using("Pkg")
-print(julia.eval("2+2"))
-julia.eval("Pkg.activate(\"/Users/Cas/Work/NBodyIPs\")")
+#julia.using("Pkg")
+#print(julia.eval("2+2"))
+#julia.eval("Pkg.activate(\"/Users/Cas/Work/NBodyIPs\")")
 #julia.using("JuLIP")
 
 from julia import ASE
@@ -28,12 +28,12 @@ def pot(potname, fast=False):
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
-def PoSH(potname):
-    julia.using("PoSH")
+def SHIPs(potname):
+    julia.using("SHIPs")
     #julia.using("SHIPs")
     #julia.using("PolyPairPots")
-    julia.eval("D = load_json(\"" + potname + "\")")
-    julia.eval("IP = decode_dict(D[\"IP\"])")
+    julia.eval("D = load_dict(\"" + potname + "\")")
+    julia.eval("IP = read_dict(D[\"IP\"])")
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
