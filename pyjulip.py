@@ -32,6 +32,7 @@ def SHIP(potname):
     julia.using("SHIPs")
     julia.eval("D = load_dict(\"" + potname + "\")")
     julia.eval("IP = read_dict(D[\"IP\"])")
+    julia.eval("IPf = SHIPs.graph_evaluator(IP)")
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
