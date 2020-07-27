@@ -58,7 +58,7 @@ class JulipCalculator(Calculator):
     """
     ASE-compatible Calculator that calls JuLIP.jl for forces and energy
     """
-    implemented_properties = ['forces', 'energy', 'stress']
+    implemented_properties = ['forces', 'energy','free_energy', 'stress']
     default_parameters = {}
     name = 'JulipCalculator'
 
@@ -73,6 +73,8 @@ class JulipCalculator(Calculator):
         self.results = {}
         if 'energy' in properties:
             self.results['energy'] = energy(self.julip_calculator, julia_atoms)
+        if 'free_energy' in properties:
+            self.results['free_energy'] = energy(self.julip_calculator, julia_atoms)
         if 'forces' in properties:
             self.results['forces'] = np.array(forces(self.julip_calculator, julia_atoms))
         if 'stress' in properties:
