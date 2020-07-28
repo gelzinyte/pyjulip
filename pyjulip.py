@@ -72,9 +72,11 @@ class JulipCalculator(Calculator):
         julia_atoms = convert(julia_atoms)
         self.results = {}
         if 'energy' in properties:
-            self.results['energy'] = energy(self.julip_calculator, julia_atoms)
-        if 'free_energy' in properties:
-            self.results['free_energy'] = energy(self.julip_calculator, julia_atoms)
+            e = energy(self.julip_calculator, julia_atoms)
+            self.results['energy'] = e
+            self.results['free_energy'] = e
+        # if 'free_energy' in properties:
+        #     self.results['free_energy'] = energy(self.julip_calculator, julia_atoms)
         if 'forces' in properties:
             self.results['forces'] = np.array(forces(self.julip_calculator, julia_atoms))
         if 'stress' in properties:
