@@ -3,53 +3,46 @@ from ase.calculators.calculator import Calculator
 from ase.constraints import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.optimize.optimize import Optimizer
 
+from julia.api import Julia
+jl = Julia(compiled_modules=False)
+
 from julia import Main
-
-from julia import Julia
-
-julia = Julia()
-#julia.using("Pkg")
-#print(julia.eval("2+2"))
-#julia.eval("Pkg.activate(\"/Users/Cas/Work/NBodyIPs\")")
-#julia.using("JuLIP")
-
 from julia import ASE
 from julia import JuLIP
 
 from julia.JuLIP import energy, forces, stress, mat, positions, cell
-#from julia.JuLIP import set_calculator_b, minimise_b, fixedcell_b, variablecell_b
 
 ASEAtoms = Main.eval("ASEAtoms(a) = ASE.ASEAtoms(a)")
 ASECalculator = Main.eval("ASECalculator(c) = ASE.ASECalculator(c)")
 convert = Main.eval("julip_at(a) = JuLIP.Atoms(a)")
 
 def pot(potname, fast=False):
-    julia.eval("IP = " + potname)
+    jl.eval("IP = " + potname)
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
-def SHIP(potname):
-    julia.using("SHIPs")
-    julia.eval("D = load_dict(\"" + potname + "\")")
-    julia.eval("IP = read_dict(D[\"IP\"])")
+def ACE(potname):
+    jl.using("ACE")
+    jl.eval("D = load_dict(\"" + potname + "\")")
+    jl.eval("IP = read_dict(D[\"IP\"])")
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
-def NBodyIPs(potname, fast=False):
-    julia.using("NBodyIPs")
-    julia.eval("IP, info = load_ip(\""+ potname + "\")")
-    if fast:
-        julia.eval("IP = fast(IP)")
-    ASE_IP = JulipCalculator("IP")
-    return ASE_IP
+# def NBodyIPs(potname, fast=False):
+#     julia.using("NBodyIPs")
+#     julia.eval("IP, info = load_ip(\""+ potname + "\")")
+#     if fast:
+#         julia.eval("IP = fast(IP)")
+#     ASE_IP = JulipCalculator("IP")
+#     return ASE_IP
 
 def FinnisSinclair(potname1, potname2):
-    julia.eval("IP = JuLIP.Potentials.FinnisSinclair(\"" + potname1 + "\", \"" + potname2 + "\")")
+    jl.eval("IP = JuLIP.Potentials.FinnisSinclair(\"" + potname1 + "\", \"" + potname2 + "\")")
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
 def EAM(potname):
-    julia.eval("IP = JuLIP.Potentials.EAM(\"" + potname + "\")")
+    jl.eval("IP = JuLIP.Potentials.EAM(\"" + potname + "\")")
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
@@ -58,7 +51,7 @@ class JulipCalculator(Calculator):
     """
     ASE-compatible Calculator that calls JuLIP.jl for forces and energy
     """
-    implemented_properties = ['forces', 'energy','free_energy', 'stress']
+    implemented_properties = ['forces', 'energy', 'free_energy', 'stress']
     default_parameters = {}
     name = 'JulipCalculator'
 
@@ -72,11 +65,9 @@ class JulipCalculator(Calculator):
         julia_atoms = convert(julia_atoms)
         self.results = {}
         if 'energy' in properties:
-            e = energy(self.julip_calculator, julia_atoms)
-            self.results['energy'] = e
-            self.results['free_energy'] = e
-        # if 'free_energy' in properties:
-        #     self.results['free_energy'] = energy(self.julip_calculator, julia_atoms)
+            E = energy(self.julip_calculator, julia_atoms)
+            self.results['energy'] = E
+            self.results['free_energy'] = E
         if 'forces' in properties:
             self.results['forces'] = np.array(forces(self.julip_calculator, julia_atoms))
         if 'stress' in properties:
