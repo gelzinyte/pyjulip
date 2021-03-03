@@ -9,8 +9,8 @@ Julia:
 - `] update` (JuLIP seems to be ancient (?) and requires updating)
 
 Python:
-- `ipython setup.py install`
-- `ipython ./example/test.py`
+- `python setup.py install`
+- `python ./example/test.py`
 
 
 ======================================================================================
