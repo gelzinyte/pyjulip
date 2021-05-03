@@ -2,22 +2,16 @@
 
 ======================================================================================
 
-Runs from inside the libatoms Docker after following the next few steps:
+Make sure to have a running ACE Julia installation first.
 
-Julia: 
-- `] add https://github.com/cortner/NBodyIPs.jl.git` (for NBodyIPs support - required for the test.py), 
-- `] update` (JuLIP seems to be ancient (?) and requires updating)
-
-Python:
 - `python setup.py install`
-- `python ./example/test.py`
-
 
 ======================================================================================
 
+You may need pyjulia
 
-Install pyjulia3
+Install pyjulia
 - `python -m pip install --user julia`
 
-Initialise with Julia
+Initialise with Julia (make sure it's built against the correct Python)
 - `python -c "import julia; julia.install()"`
