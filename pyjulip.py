@@ -1,5 +1,5 @@
 import numpy as np
-from ase.calculators.calculator import Calculator
+from ase.calculators.calculator import Calculator, all_changes
 from ase.constraints import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.optimize.optimize import Optimizer
 
@@ -59,7 +59,7 @@ class JulipCalculator(Calculator):
         Calculator.__init__(self)
         self.julip_calculator = Main.eval(julip_calculator) #julia.eval
 
-    def calculate(self, atoms, properties, system_changes):
+    def calculate(self, atoms, properties, system_changes=all_changes):
         Calculator.calculate(self, atoms, properties, system_changes)
         julia_atoms = ASEAtoms(atoms)
         julia_atoms = convert(julia_atoms)
