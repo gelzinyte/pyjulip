@@ -22,7 +22,7 @@ def pot(potname, fast=False):
     return ASE_IP
 
 def ACE(potname):
-    jl.using("ACE")
+    jl.using("ACE1")
     jl.eval("D = load_dict(\"" + potname + "\")")
     jl.eval("IP = read_dict(D[\"IP\"])")
     ASE_IP = JulipCalculator("IP")
