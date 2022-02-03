@@ -3,12 +3,17 @@ from ase.calculators.calculator import Calculator
 from ase.constraints import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.optimize.optimize import Optimizer
 
-from julia.api import Julia
-jl = Julia(compiled_modules=False)
+#from julia.api import Julia
+#jl = Julia(compiled_modules=False)
+#from julia import Main
+#from julia import ASE
+#from julia import JuLIP
+
+from julia import Julia
+Julia(runtime='C:\\Users\\CVD2\\AppData\\Local\\Programs\\Julia-1.7.1\\bin\\julia.exe')
 
 from julia import Main
-from julia import ASE
-from julia import JuLIP
+Main.eval("using ASE, JuLIP")
 
 from julia.JuLIP import energy, forces, stress, mat, positions, cell
 
@@ -22,9 +27,13 @@ def pot(potname, fast=False):
     return ASE_IP
 
 def ACE(potname):
-    jl.using("ACE1")
-    jl.eval("D = load_dict(\"" + potname + "\")")
-    jl.eval("IP = read_dict(D[\"IP\"])")
+    #jl.using("ACE1")
+    #jl.eval("D = load_dict(\"" + potname + "\")")
+    #jl.eval("IP = read_dict(D[\"IP\"])")
+    #ASE_IP = JulipCalculator("IP")
+    Main.eval("using ACE1")
+    Main.eval("D = load_dict(\"" + potname + "\")")
+    Main.eval("IP = read_dict(D[\"IP\"])")
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
