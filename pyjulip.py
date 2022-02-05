@@ -3,17 +3,11 @@ from ase.calculators.calculator import Calculator
 from ase.constraints import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.optimize.optimize import Optimizer
 
-#from julia.api import Julia
-#jl = Julia(compiled_modules=False)
-#from julia import Main
-#from julia import ASE
-#from julia import JuLIP
-
-from julia import Julia
-Julia(runtime='C:\\Users\\CVD2\\AppData\\Local\\Programs\\Julia-1.7.1\\bin\\julia.exe')
+from julia.api import Julia
+jl = Julia(compiled_modules=False)
 
 from julia import Main
-Main.eval("using ASE, JuLIP")
+Main.eval("using ASE, JuLIP, ACE1")
 
 from julia.JuLIP import energy, forces, stress, mat, positions, cell
 
@@ -21,37 +15,10 @@ ASEAtoms = Main.eval("ASEAtoms(a) = ASE.ASEAtoms(a)")
 ASECalculator = Main.eval("ASECalculator(c) = ASE.ASECalculator(c)")
 convert = Main.eval("julip_at(a) = JuLIP.Atoms(a)")
 
-def pot(potname, fast=False):
-    jl.eval("IP = " + potname)
-    ASE_IP = JulipCalculator("IP")
-    return ASE_IP
-
-def ACE(potname):
-    #jl.using("ACE1")
-    #jl.eval("D = load_dict(\"" + potname + "\")")
-    #jl.eval("IP = read_dict(D[\"IP\"])")
-    #ASE_IP = JulipCalculator("IP")
+def ACE1(potname):
     Main.eval("using ACE1")
     Main.eval("D = load_dict(\"" + potname + "\")")
     Main.eval("IP = read_dict(D[\"IP\"])")
-    ASE_IP = JulipCalculator("IP")
-    return ASE_IP
-
-# def NBodyIPs(potname, fast=False):
-#     julia.using("NBodyIPs")
-#     julia.eval("IP, info = load_ip(\""+ potname + "\")")
-#     if fast:
-#         julia.eval("IP = fast(IP)")
-#     ASE_IP = JulipCalculator("IP")
-#     return ASE_IP
-
-def FinnisSinclair(potname1, potname2):
-    jl.eval("IP = JuLIP.Potentials.FinnisSinclair(\"" + potname1 + "\", \"" + potname2 + "\")")
-    ASE_IP = JulipCalculator("IP")
-    return ASE_IP
-
-def EAM(potname):
-    jl.eval("IP = JuLIP.Potentials.EAM(\"" + potname + "\")")
     ASE_IP = JulipCalculator("IP")
     return ASE_IP
 
